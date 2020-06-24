@@ -46,7 +46,7 @@ void  consumer_thread(int thread_id)
         //加锁
         std::unique_lock <std::mutex> lk(g_cvMutex);
         //检测条件是否达成
-        g_cv.wait( lk,   []{ return !g_data_deque.empty(); });
+        g_cv.wait( lk,   []{ return !g_data_deque.empty(); });  // 实际执行时， 要么满足条件加锁。要么不满足条件放弃锁。
         //互斥操作，消息数据
         int data = g_data_deque.front();
         g_data_deque.pop_front();
